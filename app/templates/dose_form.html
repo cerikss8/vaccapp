@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Dos{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <div class="text-center mb-4">
+                <h3 class="fw-bold">
+                    {{ "Redigera dos" if dose else "Lägg till dos" }}
+                </h3>
+
+                {% if vaccination %}
+                <p class="text-muted">
+                    Vaccination: {{ vaccination.name }}
+                </p>
+                {% endif %}
+            </div>
+
+            <form method="post">
+                <input type="hidden"
+                       name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Dosnummer</label>
+                    <input type="number"
+                           name="dose_number"
+                           class="form-control form-control-lg"
+                           value="{{ dose.dose_number if dose else '' }}"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Datum</label>
+                    <input type="date"
+                           name="date_taken"
+                           class="form-control form-control-lg"
+                           value="{{ dose.date_taken.strftime('%Y-%m-%d') if dose and dose.date_taken else '' }}">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Kommentar</label>
+                    <textarea name="comment"
+                              class="form-control"
+                              rows="3">{{ dose.comment if dose else '' }}</textarea>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit"
+                            class="btn btn-primary btn-lg rounded-3">
+                        Spara
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="text-center mt-4">
+                {% if vaccination %}
+                <a href="{{ url_for('main.person_detail',
+                                    person_id=vaccination.person_id) }}"
+                   class="text-decoration-none">
+                    ← Tillbaka
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

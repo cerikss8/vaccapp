@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<text>Välkommen {{ current_user.first_name }} 👋</text>
+<h3>Mina vaccinationer</h3>
+
+<a href="{{ url_for('main.add_vaccination') }}" class="btn btn-success mb-3">
+    Lägg till vaccination
+</a>
+
+{% if vaccinations %}
+    {% for vaccination in vaccinations %}
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>{{ vaccination.name }}</h5>
+
+            <a href="{{ url_for('main.add_dose', vaccination_id=vaccination.id) }}"
+               class="btn btn-sm btn-outline-primary mt-2">
+               Lägg till dos
+            </a>
+            <div class="mt-2">
+
+                <a href="{{ url_for('main.edit_vaccination', vaccination_id=vaccination.id) }}"
+                   class="btn btn-sm btn-outline-warning">
+                   Redigera
+                </a>
+
+                <form method="post"
+                      action="{{ url_for('main.delete_vaccination', vaccination_id=vaccination.id) }}"
+                      style="display:inline;">
+                    <button class="btn btn-sm btn-outline-danger">
+                        Ta bort
+                    </button>
+                </form>
+
+            </div>
+
+            {% if vaccination.doses %}
+            <ul class="list-group mt-3">
+                {% for dose in vaccination.doses %}
+                <li class="list-group-item">
+                    <strong>Dos {{ dose.dose_number }}</strong> – {{ dose.date_taken }}
+                    {% if dose.comment %}
+                        <div class="text-muted small">{{ dose.comment }}</div>
+                    {% endif %}
+                    <a href="{{ url_for('main.edit_dose', dose_id=dose.id) }}"
+                       class="btn btn-sm btn-outline-warning">
+                       Edit
+                    </a>
+
+                    <form method="post"
+                          action="{{ url_for('main.delete_dose', dose_id=dose.id) }}"
+                          style="display:inline;">
+                        <button class="btn btn-sm btn-outline-danger">
+                            Delete
+                        </button>
+                    </form>
+
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p class="text-muted mt-3">Inga doser registrerade ännu.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Du har inga vaccinationer ännu.</p>
+{% endif %}
+
+{% endblock %}

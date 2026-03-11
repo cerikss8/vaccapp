@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Återställ konto{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="mb-3 text-center">♻️ Återställ konto</h4>
+
+        <form method="post">
+          <div class="mb-3">
+            <label>Användarnamn</label>
+            <input name="username" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label>Lösenord</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+
+          <button class="btn btn-success w-100">
+            Återställ konto
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

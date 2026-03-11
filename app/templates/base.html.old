@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VaccApp{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+  .navbar-nav .nav-link {
+      padding: 0.75rem 1rem;
+        }
+    </style>
+</head>
+<body>
+
+{% if show_navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+
+    <a class="navbar-brand" href="{{ url_for('main.dashboard') }}">
+      VaccApp
+    </a>
+
+    <!-- Mobil knapp -->
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarContent"
+            aria-controls="navbarContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+
+    <!-- Meny -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.dashboard') }}">
+            Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.profile') }}">
+            Profil
+          </a>
+        </li>
+<!--
+        {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.dashboard') }}">
+              📄 PDF
+            </a>
+          </li>
+        {% endif %}
+-->
+
+        {% if current_user.is_authenticated and current_user.is_admin %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('admin.users') }}">
+            Admin
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link text-danger"
+             href="{{ url_for('auth.logout') }}">
+            Logga ut
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!--
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.dashboard') }}">VaccApp</a>
+
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.profile') }}">Profil</a>
+                </li>
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin.users') }}">Admin</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link text-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+-->
+{% endif %}
+
+<div class="container mt-4">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+    
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer class="mt-5 py-4 border-top bg-light">
+    <div class="container text-center">
+
+        <div class="mb-2">
+            <strong>VaccApp</strong> – CEME Smart System
+        </div>
+
+        <div class="text-muted small">
+            Support:
+            <a href="mailto:support@vaccapp.com"
+               class="text-decoration-none">
+               support@vaccapp.com
+            </a>
+        </div>
+
+        <div class="text-muted small mt-2">
+            © {{ 2026 }} VaccApp
+        </div>
+
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Vaccination{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card p-4 shadow-sm rounded-4">
+
+            <h4 class="mb-4">
+                {{ "Redigera vaccination" if vaccination else "Lägg till vaccination" }}
+            </h4>
+
+            <form method="post">
+                <input type="hidden"
+                       name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Vaccinationsnamn</label>
+                    <input type="text"
+                           name="name"
+                           class="form-control"
+                           value="{{ vaccination.name if vaccination else '' }}"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Totalt antal doser för fullgott skydd</label>
+                    <input type="number"
+                           name="total_doses"
+                           class="form-control"
+                           min="1"
+                           value="{{ vaccination.total_doses if vaccination else 1 }}"
+                           required>
+                    <div class="form-text">
+                        Ange hur många doser som totalt krävs. Användaren registrerar själv varje dos separat.
+                    </div>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Spara
+                </button>
+            </form>
+
+            {% if vaccination %}
+            <hr class="my-4">
+
+            <form method="post"
+                  action="{{ url_for('main.delete_vaccination', vaccination_id=vaccination.id) }}">
+                <input type="hidden"
+                       name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <button type="submit"
+                        class="btn btn-danger w-100"
+                        onclick="return confirm('Är du säker? Detta tar bort vaccinationen och alla dess doser.');">
+                    🗑 Ta bort vaccination
+                </button>
+            </form>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

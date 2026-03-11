@@ -1,0 +1,33 @@
+Ny_Vaccin_app/
+|
+│── .env
+├── app/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── auth.py
+│   ├── routes.py
+│   ├── admin.py
+│   ├── pdf.py
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── login.html
+│   │   ├── dashboard.html
+│   │   ├── vaccination_form.html
+│   │   ├── profile.html
+│   │   ├── reset_request.html
+│   │   ├── reset_password.html
+│   │   └── admin_users.html
+│   │   └── register.html
+│   │   └── restore.html
+│   │   └── forgott_password.html
+│   │   └── index.html
+│   │   └── reset_request.html
+│   └── static/
+│
+├── migrations/
+├── instance/
+├── config.py
+├── run.py
+├── cleanup.py
+├── seed.py
+└── requirements.txt

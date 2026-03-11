@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}{{ person.first_name }}{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold">
+            {{ person.first_name }} {{ person.last_name }}
+        </h2>
+
+        <p class="text-muted mb-0">
+            {{ person.relationship|capitalize }}
+            {% if person.date_of_birth %}
+                • Född {{ person.date_of_birth.strftime('%Y-%m-%d') }}
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('main.add_vaccination', person_id=person.id) }}"
+           class="btn btn-primary shadow">
+            + Lägg till vaccination
+        </a>
+
+        <a href="{{ url_for('pdf.export_pdf', person_id=person.id) }}"
+           class="btn btn-outline-secondary">
+            PDF
+        </a>
+    </div>
+</div>
+
+
+{% if person.vaccinations %}
+
+<div class="row">
+{% for vaccination in person.vaccinations %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 p-3 shadow-sm rounded-4">
+
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <h5 class="fw-semibold mb-1">{{ vaccination.name }}</h5>
+
+                    {% set completed = vaccination.doses|length %}
+                    {% set total = vaccination.total_doses %}
+
+                    <span class="badge {% if completed >= total %}bg-success{% else %}bg-primary{% endif %}">
+                        {{ completed }} / {{ total }} doser
+                    </span>
+                </div>
+
+                <a href="{{ url_for('main.edit_vaccination', vaccination_id=vaccination.id) }}"
+                   class="btn btn-sm btn-outline-primary">
+                    ✏️ Ändra
+                </a>
+            </div>
+
+            <hr>
+
+            {% if vaccination.doses %}
+    <ul class="list-unstyled small mb-3">
+        {% for dose in vaccination.doses %}
+            <li class="mb-3 p-3 border rounded bg-white">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold mb-1">
+                            Dos {{ dose.dose_number }}
+                        </div>
+
+                        <div class="mb-2">
+                            {% if dose.date_taken %}
+                                <span class="text-muted">
+                                    {{ dose.date_taken.strftime('%Y-%m-%d') }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-info text-dark">
+                                    Kommande dos
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        {% if dose.comment %}
+                            <div class="text-muted small">
+                                {{ dose.comment }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{{ url_for('main.edit_dose', dose_id=dose.id) }}"
+                           class="btn btn-sm btn-outline-secondary">
+                            ✏️ Ändra
+                        </a>
+
+                        <form method="post"
+                              action="{{ url_for('main.delete_dose', dose_id=dose.id) }}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit"
+                                    class="btn btn-sm btn-outline-danger w-100"
+                                    onclick="return confirm('Ta bort dos {{ dose.dose_number }}?');">
+                                🗑 Ta bort
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="text-muted small">
+        Inga doser registrerade ännu.
+    </p>
+{% endif %}
+
+            <div class="mt-auto">
+                <a href="{{ url_for('main.add_dose', vaccination_id=vaccination.id) }}"
+                   class="btn btn-sm btn-success w-100">
+                    + Lägg till dos
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% else %}
+
+<div class="card p-5 text-center shadow-sm rounded-4">
+    <h4>Inga vaccinationer ännu</h4>
+    <p class="text-muted">
+        Klicka på knappen ovan för att lägga till första vaccinationen.
+    </p>
+</div>
+
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('main.dashboard') }}"
+       class="text-decoration-none">
+        ← Tillbaka till Startsidan
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Admin - Användare{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0 rounded-4 p-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0">👨‍💼 Användarhantering</h3>
+            <span class="badge bg-dark">
+                {{ users|length }} användare
+            </span>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Namn</th>
+                        <th>Telefon</th>
+                        <th>Roll</th>
+                        <th class="text-end">Åtgärd</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+
+                        <td>{{ user.email }}</td>
+
+                        <td>
+                            {{ user.first_name }} {{ user.last_name }}
+                        </td>
+
+                        <td>{{ user.phone }}</td>
+
+                        <td>
+                            {% if user.is_admin %}
+                                <span class="badge bg-primary">
+                                    Admin
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary">
+                                    Användare
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+
+                            {% if user.id != current_user.id %}
+                                <form method="post"
+                                      action="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           name="csrf_token"
+                                           value="{{ csrf_token() }}">
+
+                                    <button type="submit"
+                                            class="btn btn-danger btn-sm rounded-3"
+                                            onclick="return confirm('Är du säker på att du vill ta bort användaren?');">
+                                        🗑 Ta bort
+                                    </button>
+                                </form>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">
+                                    Du
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

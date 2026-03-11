@@ -1,0 +1,54 @@
+/* ===== Modern App Theme ===== */
+
+body {
+    background: linear-gradient(135deg, #eef2f7, #dce6f5);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(90deg, #0d6efd, #0047b3);
+}
+
+.navbar .nav-link,
+.navbar-brand {
+    color: white !important;
+    font-weight: 500;
+}
+
+.navbar .nav-link:hover {
+    opacity: 0.8;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, #0d6efd, #0047b3);
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+}
+
+.btn-success {
+    border-radius: 12px;
+}
+
+.btn-danger {
+    border-radius: 12px;
+}
+
+/* Page container */
+.container {
+    margin-top: 40px;
+}

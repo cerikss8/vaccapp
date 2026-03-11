@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VaccApp{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+      .navbar-nav .nav-link {
+        padding: 0.75rem 1rem;
+      }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+{% if show_navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+
+    <a class="navbar-brand" href="{{ url_for('main.dashboard') }}">
+      VaccApp
+    </a>
+
+    <!-- Mobil knapp -->
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarContent"
+            aria-controls="navbarContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Meny -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.dashboard') }}">
+            Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.profile') }}">
+            Profil
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.about') }}">
+                Om VaccApp
+            </a>
+        </li>
+
+
+        {% if current_user.is_authenticated and current_user.is_admin %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('admin.users') }}">
+            Admin
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link text-danger"
+             href="{{ url_for('auth.logout') }}">
+            Logga ut
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+{% endif %}
+
+<!-- ✅ MAIN måste ligga här, inte inne i navbar -->
+<main class="flex-grow-1">
+  <div class="container mt-4">
+
+      {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              {% for message in messages %}
+                  <div class="alert alert-warning">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+
+  </div>
+</main>
+
+<footer class="mt-5 py-4 border-top bg-light">
+    <div class="container text-center">
+
+        <div class="mb-2">
+            <strong>VaccApp</strong> – CEME Smart System
+        </div>
+
+        <div class="text-muted small">
+            Support:
+            <a href="mailto:support@vaccapp.com"
+               class="text-decoration-none">
+               support@vaccapp.com
+            </a>
+        </div>
+
+        <div class="text-muted small mt-2">
+            © {{ 2026 }} VaccApp
+        </div>
+
+    </div>
+</footer>
+
+<a href="https://buymeacoffee.com/vaccapp"
+   target="_blank"
+   style="
+   position:fixed;
+   bottom:20px;
+   right:20px;
+   background:#FFDD00;
+   padding:10px 14px;
+   border-radius:25px;
+   text-decoration:none;
+   font-weight:600;
+   box-shadow:0 3px 8px rgba(0,0,0,0.2);
+   ">
+   ☕ Coffee
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

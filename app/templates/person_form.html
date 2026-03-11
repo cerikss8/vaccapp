@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Lägg till person{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+
+        <div class="card shadow-lg border-0 rounded-4 p-4">
+
+            <div class="text-center mb-4">
+                <h3 class="fw-bold">
+                    👤 {{ "Redigera person" if person else "Lägg till barn/person" }}
+                </h3>
+                <p class="text-muted">
+                    Registrera en familjemedlem som du vill hantera vaccinationer för.
+                </p>
+            </div>
+
+            <form method="post">
+                <input type="hidden"
+                       name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="mb-3">
+                    <label class="form-label">Förnamn</label>
+                    <input type="text"
+                           name="first_name"
+                           class="form-control form-control-lg"
+                           value="{{ person.first_name if person else '' }}"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Efternamn</label>
+                    <input type="text"
+                           name="last_name"
+                           class="form-control form-control-lg"
+                           value="{{ person.last_name if person else '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Födelsedatum</label>
+                    <input type="date"
+                           name="date_of_birth"
+                           class="form-control form-control-lg"
+                           value="{{ person.date_of_birth if person and person.date_of_birth else '' }}">
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Relation</label>
+                    <select name="relationship"
+                            class="form-select form-select-lg">
+                        <option value="self"
+                            {% if person and person.relationship == "self" %}selected{% endif %}>
+                            Jag
+                        </option>
+                        <option value="child"
+                            {% if not person or person.relationship == "child" %}selected{% endif %}>
+                            Barn
+                        </option>
+                        <option value="other"
+                            {% if person and person.relationship == "other" %}selected{% endif %}>
+                            Annan
+                        </option>
+                    </select>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit"
+                            class="btn btn-success btn-lg rounded-3">
+                        Spara
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="text-center mt-4">
+                <a href="{{ url_for('main.dashboard') }}"
+                   class="text-decoration-none">
+                    ← Tillbaka till Startsidan
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

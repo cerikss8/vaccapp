@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold">
+            Välkommen {{ current_user.first_name }} 👋
+        </h2>
+        <p class="text-muted mb-0">
+            Hantera dina och din familjs vaccinationer
+        </p>
+    </div>
+
+    <a href="{{ url_for('main.add_person') }}"
+       class="btn btn-success shadow">
+        + Lägg till barn/person
+    </a>
+</div>
+
+{% if persons %}
+
+<div class="row">
+
+{% for person in persons %}
+<div class="col-lg-4 col-md-6 mb-4">
+
+    <div class="card h-100 p-4 shadow-sm rounded-4">
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+
+            <div>
+                <h5 class="fw-semibold mb-1">
+                    {{ person.first_name }} {{ person.last_name }}
+                </h5>
+
+                <span class="badge bg-primary">
+                    {{ person.vaccinations|length }} vaccination{% if person.vaccinations|length != 1 %}er{% endif %}
+<!--{{ person.vaccinations|length }} vaccinationer-->
+                </span>
+
+                {% if person.relationship == "self" %}
+                    <span class="badge bg-dark ms-2">Du</span>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div class="mt-auto">
+
+            <a href="{{ url_for('main.person_detail',
+                                person_id=person.id) }}"
+               class="btn btn-outline-primary w-100 mb-2">
+                Öppna
+            </a>
+
+            <a href="{{ url_for('pdf.export_pdf',
+                                person_id=person.id) }}"
+               class="btn btn-outline-secondary w-100">
+                PDF
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="card p-5 text-center shadow-sm rounded-4">
+    <h4>Du har inga registrerade personer ännu</h4>
+    <p class="text-muted">
+        Börja med att lägga till dig själv eller barn.
+    </p>
+
+    <a href="{{ url_for('main.add_person') }}"
+       class="btn btn-primary mt-3">
+        Lägg till första personen
+    </a>
+</div>
+
+{% endif %}
+
+{% endblock %}
