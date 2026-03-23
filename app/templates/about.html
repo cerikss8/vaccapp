@@ -1,73 +1,304 @@
 {% extends "base.html" %}
+
 {% block title %}Om VaccApp{% endblock %}
 
+{% block meta_description %}
+VaccApp är en webbaserad tjänst för säker och enkel hantering av vaccinationer för privatpersoner, familjer och företag.
+{% endblock %}
+
 {% block content %}
+<section class="py-5 bg-light border-bottom">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <span class="badge bg-primary mb-3">Svensk vaccinationshantering</span>
+                <h1 class="display-5 fw-bold mb-3">Om VaccApp</h1>
+                <p class="lead text-muted mb-4">
+                    VaccApp hjälper privatpersoner, familjer och organisationer att hålla ordning på vaccinationer,
+                    doser och intyg på ett enkelt, säkert och modernt sätt.
+                </p>
 
-<div class="container" style="max-width: 700px">
+                <div class="d-flex flex-wrap gap-2">
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary btn-lg">
+                            Gå till min sida
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">
+                            Skapa konto
+                        </a>
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg">
+                            Logga in
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
 
-    <h2 class="mb-4">Om VaccApp</h2>
+            <div class="col-lg-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-3">Varför VaccApp?</h2>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <strong>Samlad överblick</strong><br>
+                                <span class="text-muted">Alla vaccinationer på ett ställe.</span>
+                            </li>
+                            <li class="mb-3">
+                                <strong>Flera personer</strong><br>
+                                <span class="text-muted">Hantera dig själv, barn eller andra familjemedlemmar.</span>
+                            </li>
+                            <li class="mb-3">
+                                <strong>PDF-export</strong><br>
+                                <span class="text-muted">Skapa vaccinationskort när du behöver dem.</span>
+                            </li>
+                            <li>
+                                <strong>Säker inloggning</strong><br>
+                                <span class="text-muted">Kontohantering, lösenordsåterställning och adminstöd.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <p>
-        VaccApp hjälper dig att hålla koll på vaccinationer för dig själv
-        och din familj.
-    </p>
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="h-100 p-4 border rounded-4 bg-white shadow-sm">
+                    <h2 class="h3 mb-3">Problemet</h2>
+                    <p class="text-muted mb-0">
+                        Vaccinationsinformation hamnar ofta på olika ställen: på papper, i mejl,
+                        i gamla intyg eller hos flera olika vårdgivare. Det gör det svårt att få en tydlig bild
+                        över vad som tagits, när nästa dos behövs och vilka personer man ansvarar för.
+                    </p>
+                </div>
+            </div>
 
-    <p>
-        Många vaccinationer ges i flera doser och det kan vara svårt att
-        komma ihåg när nästa dos ska tas. VaccApp gör det enkelt att
-        registrera, organisera och följa upp vaccinationer.
-    </p>
+            <div class="col-lg-6">
+                <div class="h-100 p-4 border rounded-4 bg-white shadow-sm">
+                    <h2 class="h3 mb-3">Lösningen</h2>
+                    <p class="text-muted mb-0">
+                        VaccApp samlar vaccinationshistorik digitalt i ett användarvänligt gränssnitt.
+                        Du kan registrera vaccinationer, lägga till doser, hantera flera personer
+                        och exportera vaccinationskort till PDF när det behövs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <h4 class="mt-4">Funktioner</h4>
+<section class="py-5 bg-light border-top border-bottom">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Funktioner</h2>
+            <p class="text-muted mb-0">Byggd för enkelhet, struktur och framtida skalbarhet.</p>
+        </div>
 
-    <ul>
-        <li>Registrera vaccinationer</li>
-        <li>Hantera flera familjemedlemmar</li>
-        <li>Se dosnummer och vaccinationshistorik</li>
-        <li>Exportera vaccinationskort till PDF</li>
-    </ul>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5">Vaccinationshantering</h3>
+                        <p class="text-muted mb-0">
+                            Registrera vaccinationer och håll ordning på historik, vaccintyp och status.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-    <hr class="my-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5">Doser och datum</h3>
+                        <p class="text-muted mb-0">
+                            Lägg till en eller flera doser per vaccination och spara relevanta datum.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-    <h4>Stöd projektet</h4>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5">Familjeöversikt</h3>
+                        <p class="text-muted mb-0">
+                            Hantera flera personer i samma konto, exempelvis barn eller andra anhöriga.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-    <p>
-        VaccApp utvecklas som ett självständigt projekt.  
-        Om du gillar appen kan du stötta utvecklingen.
-    </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5">PDF-export</h3>
+                        <p class="text-muted mb-0">
+                            Exportera vaccinationskort till PDF för utskrift, delning eller dokumentation.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-<div class="text-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5">Kontosäkerhet</h3>
+                        <p class="text-muted mb-0">
+                            Stöd för inloggning, utloggning och återställning av lösenord via e-post.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="https://buymeacoffee.com/vaccapp" target="_blank">
-        <img src="{{ url_for('static', filename='img/bmc_qr.png') }}"
-             alt="Buy me a coffee QR"
-             style="max-width:200px"
-             class="mb-3">
-    </a>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <h3 class="h5">Adminstöd</h3>
+                        <p class="text-muted mb-0">
+                            Administratörer kan hantera användare och stödja tjänstens drift och utveckling.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <br>
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-6">
+                <div class="h-100 p-4 rounded-4 bg-primary text-white shadow">
+                    <h2 class="h3 mb-3">För privatpersoner och familjer</h2>
+                    <p>
+                        VaccApp gör det enklare att hålla ordning på vaccinationshistorik för dig själv
+                        och personer du ansvarar för. All information finns samlad och lättillgänglig.
+                    </p>
+                    <ul class="mb-0">
+                        <li>Samlad översikt</li>
+                        <li>Stöd för flera personer</li>
+                        <li>Enkel export av vaccinationskort</li>
+                    </ul>
+                </div>
+            </div>
 
-    <a href="https://buymeacoffee.com/vaccapp"
-       target="_blank"
-       class="btn btn-warning">
-        ☕ Buy Me a Coffee
-    </a>
+            <div class="col-lg-6">
+                <div class="h-100 p-4 rounded-4 border shadow-sm bg-white">
+                    <h2 class="h3 mb-3">För företag och organisationer</h2>
+                    <p class="text-muted">
+                        VaccApp har potential som B2B-lösning för verksamheter som vill förenkla administration
+                        kring vaccinationer, dokumentation och uppföljning.
+                    </p>
+                    <ul class="text-muted mb-4">
+                        <li>Strukturerad hantering av flera personer</li>
+                        <li>Tydligare dokumentation</li>
+                        <li>Underlag som kan exporteras vid behov</li>
+                    </ul>
 
-</div>
+                    <a href="mailto:support@vaccapp.com" class="btn btn-outline-primary">
+                        Kontakta oss
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <hr class="my-4">
+<section class="py-5 bg-light border-top border-bottom">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+                <h2 class="fw-bold mb-3">Byggd med fokus på enkelhet och förtroende</h2>
+                <p class="text-muted">
+                    VaccApp utvecklas med målet att göra vaccinationshantering mer tillgänglig,
+                    tydlig och praktisk i vardagen. Tjänsten är skapad för att vara enkel att använda,
+                    både för privatpersoner och i framtiden för verksamheter med större behov.
+                </p>
+                <p class="text-muted mb-0">
+                    Plattformen är byggd med fokus på stabilitet, enkel användning och möjlighet till vidareutveckling över tid.
+                </p>
+            </div>
 
-    <p class="text-muted">
-        VaccApp är inte kopplad till någon myndighet eller
-        vårdgivare. Informationen lagras endast för
-        personlig användning.
-    </p>
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="h5 mb-3">Kärnvärden</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">✔ Enkel att använda</li>
+                            <li class="mb-2">✔ Tydlig informationsstruktur</li>
+                            <li class="mb-2">✔ Byggd för vidareutveckling</li>
+                            <li class="mb-2">✔ Fokus på trygg och modern användning</li>
+                            <li>✔ Svenskt initiativ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <a href="{{ url_for('main.dashboard') }}"
-       class="text-decoration-none">
-        ← Tillbaka till Startsidan
-    </a>
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+                <h2 class="fw-bold mb-3">Om utvecklaren</h2>
+                <p class="text-muted mb-0">
+                    VaccApp utvecklas av Clas Eriksson med ambitionen att skapa en praktisk och modern
+                    lösning för hantering av vaccinationsinformation. Projektet drivs med fokus på
+                    användbarhet, enkel administration och långsiktig vidareutveckling.
+                </p>
+            </div>
 
-</div>
+            <div class="col-lg-4">
+                <div class="p-4 border rounded-4 shadow-sm bg-white text-center">
+                    <h3 class="h5 mb-3">Stötta utvecklingen</h3>
+                    <p class="text-muted">
+                        Gillar du VaccApp och vill hjälpa projektet framåt?
+                    </p>
 
+                    {% if buymeacoffee_url %}
+                        <a href="{{ buymeacoffee_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-warning mb-3">
+                            Buy Me a Coffee ☕
+                        </a>
+                    {% endif %}
+
+                    {% if buymeacoffee_qr %}
+                        <div>
+                            <img src="{{ url_for('static', filename=buymeacoffee_qr) }}"
+                                 alt="QR-kod för att stötta VaccApp"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-width: 180px;">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-dark text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Redo att komma igång?</h2>
+        <p class="mb-4 text-white-50">
+            Skapa konto och börja samla vaccinationsinformation digitalt i VaccApp.
+        </p>
+
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary btn-lg">
+                Gå till dashboard
+            </a>
+        {% else %}
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg me-2">
+                Skapa konto
+            </a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg">
+                Logga in
+            </a>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

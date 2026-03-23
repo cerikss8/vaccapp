@@ -52,6 +52,19 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        from app.models import Person
+        
+        # skapa första person
+        person = Person(
+            user_id=user.id,
+            first_name=user.first_name,
+            last_name=user.last_name,
+            relationship="self"
+        )
+
+        db.session.add(person)
+        db.session.commit()
+
         login_user(user)
         flash("Konto skapat!", "success")
         return redirect(url_for("main.dashboard"))
@@ -87,7 +100,7 @@ def send_reset_email(email, token):
 
     msg = Message(
         "VaccApp Password Reset",
-        sender="noreply@vaccapp.com",
+        sender="support@vaccapp.com",
         recipients=[email],
     )
 

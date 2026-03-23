@@ -81,6 +81,14 @@
                             {% endif %}
                         </div>
 
+                        {% if dose.provider %}
+                            <div class="text-muted small">
+                                <strong>Vårdgivare:</strong> {{ dose.provider }}
+                            </div>
+                        {% endif %}
+
+
+
                         {% if dose.comment %}
                             <div class="text-muted small">
                                 {{ dose.comment }}

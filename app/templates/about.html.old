@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Om VaccApp{% endblock %}
+
+{% block content %}
+
+<div class="container" style="max-width: 700px">
+
+    <h2 class="mb-4">Om VaccApp</h2>
+
+    <p>
+        VaccApp hjälper dig att hålla koll på vaccinationer för dig själv
+        och din familj.
+    </p>
+
+    <p>
+        Många vaccinationer ges i flera doser och det kan vara svårt att
+        komma ihåg när nästa dos ska tas. VaccApp gör det enkelt att
+        registrera, organisera och följa upp vaccinationer.
+    </p>
+
+    <h4 class="mt-4">Funktioner</h4>
+
+    <ul>
+        <li>Registrera vaccinationer</li>
+        <li>Hantera flera familjemedlemmar</li>
+        <li>Se dosnummer och vaccinationshistorik</li>
+        <li>Exportera vaccinationskort till PDF</li>
+    </ul>
+
+    <hr class="my-4">
+
+    <h4>Stöd projektet</h4>
+
+    <p>
+        VaccApp utvecklas som ett självständigt projekt och är helt gratis att använda av privatpersoner.
+        Om du gillar appen kan du stötta utvecklingen med att köpa mig en "kaffe"☕.
+    </p>
+
+<div class="text-center">
+
+    <a href="https://buymeacoffee.com/vaccapp" target="_blank">
+        <img src="{{ url_for('static', filename='img/bmc_qr.png') }}"
+             alt="Buy me a coffee QR"
+             style="max-width:200px"
+             class="mb-3">
+    </a>
+
+    <br>
+
+    <a href="https://buymeacoffee.com/vaccapp"
+       target="_blank"
+       class="btn btn-warning">
+        ☕ Buy Me a Coffee
+    </a>
+
+</div>
+
+    <hr class="my-4">
+
+    <p class="text-muted">
+        VaccApp är inte kopplad till någon myndighet eller
+        vårdgivare. Informationen lagras endast för
+        personlig användning.
+    </p>
+
+    <a href="{{ url_for('main.dashboard') }}"
+       class="text-decoration-none">
+        ← Tillbaka till Startsidan
+    </a>
+
+</div>
+
+{% endblock %}

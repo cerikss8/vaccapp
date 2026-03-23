@@ -42,6 +42,15 @@
                            value="{{ dose.date_taken.strftime('%Y-%m-%d') if dose and dose.date_taken else '' }}">
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Vårdgivare</label>
+                    <input type="text"
+                           name="provider"
+                           class="form-control form-control-lg"
+                           placeholder="t.ex. Region Västerbotten"
+                           value="{{ dose.provider if dose and dose.provider else '' }}">
+                </div>
+
                 <div class="mb-4">
                     <label class="form-label">Kommentar</label>
                     <textarea name="comment"
@@ -55,7 +64,6 @@
                         Spara
                     </button>
                 </div>
-
             </form>
 
             <div class="text-center mt-4">

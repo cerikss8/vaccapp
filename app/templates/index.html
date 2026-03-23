@@ -9,6 +9,11 @@
          style="max-width: 250px;">
     <h1>VaccApp</h1>
     <p class="lead">Hantera dina vaccinationer enkelt och säkert.</p>
+    
+    <a class="nav-link" href="{{ url_for('main.about') }}">
+        Om VaccApp
+    </a>
+
     <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg mt-3">
         Logga in
     </a>

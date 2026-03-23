@@ -172,7 +172,8 @@ def add_dose(vaccination_id):
     if request.method == "POST":
         dose_number = request.form.get("dose_number")
         date_str = request.form.get("date_taken")
-        comment = request.form.get("comment")
+        provider = request.form.get("provider").strip() or None
+        comment = request.form.get("comment").strip() or None
 
         date_taken = None
         if date_str:
@@ -181,6 +182,7 @@ def add_dose(vaccination_id):
         dose = Dose(
             dose_number=int(dose_number),
             date_taken=date_taken,
+            provider=provider,
             comment=comment,
             vaccination_id=vaccination.id
         )
@@ -203,7 +205,9 @@ def edit_dose(dose_id):
         dose.dose_number = int(request.form.get("dose_number"))
         date_str = request.form.get("date_taken")
         dose.date_taken = datetime.strptime(date_str, "%Y-%m-%d").date() if date_str else None
-        dose.comment = request.form.get("comment")
+        dose.provider = request.form.get("provider").strip() or None
+        dose.comment = request.form.get("comment").strip() or None
+
         db.session.commit()
         return redirect(url_for("main.person_detail", person_id=dose.vaccination.person_id))
 
@@ -248,4 +252,6 @@ def edit_profile():
 
 @main_bp.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html",
+        buymeacoffee_url="https://buymeacoffee.com/vaccapp",
+        buymeacoffee_qr="img/bmc_qr.png")

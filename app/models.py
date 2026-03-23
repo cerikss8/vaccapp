@@ -64,6 +64,7 @@ class Dose(db.Model):
     dose_number = db.Column(db.Integer, nullable=False)
     date_taken = db.Column(db.Date, nullable=True)
     comment = db.Column(db.Text)
+    provider = db.Column(db.String(120), nullable=True)
 
     vaccination_id = db.Column(db.Integer, db.ForeignKey("vaccination.id"), nullable=False)
 
